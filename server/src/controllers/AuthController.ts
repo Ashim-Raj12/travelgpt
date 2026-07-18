@@ -12,7 +12,7 @@ export class AuthController {
 
   async verifyEmail(req: Request, res: Response, next: NextFunction) {
     try {
-      await authService.verifyEmail(req.params.token, res);
+      await authService.verifyEmail(req.params.token as string, res);
     } catch (error) {
       next(error);
     }

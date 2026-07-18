@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { Sidebar } from "./sidebar"
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
-import { Map, Plane, Compass, Heart, Settings, Bell, Search, User } from "lucide-react"
+import { Plane, Compass, Map, Heart, LogOut, Settings, User, Bell, Menu, X, Home, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useTheme } from "@/components/theme-provider"
-import { Moon, Sun, Menu, Sparkles } from "lucide-react"
+import { Moon, Sun, Sparkles } from "lucide-react"
 import { Link } from "react-router"
 import {
   Popover,
@@ -19,10 +19,12 @@ interface DashboardLayoutProps {
 }
 
 const navItems = [
-  { icon: Plane, label: "My Trips", href: "/dashboard" },
-  { icon: Compass, label: "Explore", href: "#" },
-  { icon: Map, label: "Map View", href: "#" },
-  { icon: Heart, label: "Saved", href: "#" },
+  { icon: Home, label: "Dashboard", href: "/dashboard" },
+  { icon: Map, label: "Plan Trip", href: "/plan" },
+  { icon: Search, label: "Search", href: "/search" },
+  { icon: Compass, label: "Discover", href: "#" },
+  { icon: Heart, label: "Saved Trips", href: "#" },
+  { icon: User, label: "Profile", href: "#" },
 ]
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {

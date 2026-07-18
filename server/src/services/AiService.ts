@@ -141,6 +141,93 @@ export class AiService {
       }
     `;
   }
+
+  public async searchFlights(query: any, filters: any, sortBy: string) {
+    if (!process.env.GEMINI_API_KEY) throw new AppError("GEMINI_API_KEY is missing", 500);
+    const { GoogleGenAI } = await import("@google/genai");
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    
+    const prompt = this.constructFlightSearchPrompt(query, filters, sortBy);
+    const response = await ai.models.generateContent({
+      model: "gemini-3.5-flash",
+      contents: prompt,
+      config: { responseMimeType: "application/json", temperature: 0.7 }
+    });
+    
+    if (!response.text) throw new AppError("Failed to generate flight results", 500);
+    return JSON.parse(response.text);
+  }
+
+  public async searchHotels(query: any, filters: any, sortBy: string) {
+    if (!process.env.GEMINI_API_KEY) throw new AppError("GEMINI_API_KEY is missing", 500);
+    const { GoogleGenAI } = await import("@google/genai");
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    
+    const prompt = this.constructHotelSearchPrompt(query, filters, sortBy);
+    const response = await ai.models.generateContent({
+      model: "gemini-3.5-flash",
+      contents: prompt,
+      config: { responseMimeType: "application/json", temperature: 0.7 }
+    });
+    
+    if (!response.text) throw new AppError("Failed to generate hotel results", 500);
+    return JSON.parse(response.text);
+  }
+
+  private constructFlightSearchPrompt(query: any, filters: any, sortBy: string): string {
+    return `
+      You are a flight search API. Generate 5 fictional but highly realistic flight search results for a query.
+      Query: ${JSON.stringify(query)}
+      Filters applied: ${JSON.stringify(filters)}
+      Sort order: ${sortBy}
+
+      The flights must strictly adhere to the budget, direct/stops preference, and be logically sorted by ${sortBy} (cheapest, fastest, or best_rated).
+
+      CRITICAL: Return ONLY a JSON object containing an array called "flights".
+      {
+        "flights": [
+          {
+            "id": "String",
+            "airline": "String (e.g. Delta, Emirates, Oceanic)",
+            "flightNumber": "String",
+            "departureTime": "String (e.g. 08:00 AM)",
+            "arrivalTime": "String",
+            "duration": "String (e.g. 5h 30m)",
+            "stops": Number (0 for direct),
+            "price": Number,
+            "rating": Number (out of 5)
+          }
+        ]
+      }
+    `;
+  }
+
+  private constructHotelSearchPrompt(query: any, filters: any, sortBy: string): string {
+    return `
+      You are a hotel search API. Generate 5 fictional but highly realistic hotel search results for a query in ${query.destination || 'the requested city'}.
+      Query: ${JSON.stringify(query)}
+      Filters applied: ${JSON.stringify(filters)} (Includes max budget, min rating, max distance from center, required amenities)
+      Sort order: ${sortBy}
+
+      The hotels must strictly adhere to the filters and be logically sorted by ${sortBy} (cheapest, best_rated).
+      
+      CRITICAL: Return ONLY a JSON object containing an array called "hotels".
+      {
+        "hotels": [
+          {
+            "id": "String",
+            "name": "String",
+            "description": "String (short 1 sentence)",
+            "pricePerNight": Number,
+            "rating": Number (out of 5),
+            "distanceFromCenter": Number (in km),
+            "amenities": ["String", "String"],
+            "imageType": "String (e.g., modern, resort, boutique)"
+          }
+        ]
+      }
+    `;
+  }
 }
 
 export const aiService = new AiService();

@@ -12,6 +12,7 @@ import { ProfileCompletionPage } from "@/features/auth/pages/ProfileCompletionPa
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage"
 import { PlannerPage } from "@/features/planner/pages/PlannerPage"
 import { ItineraryPage } from "@/features/itinerary/pages/ItineraryPage"
+import { SearchPage } from "@/features/search/pages/SearchPage"
 
 function App() {
   return (
@@ -28,7 +29,9 @@ function App() {
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/plan" element={<PlannerPage />} />
+          <Route path="/planner" element={<PlannerPage />} />
           <Route path="/itinerary/:id" element={<ItineraryPage />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </TooltipProvider>
     </ThemeProvider>
