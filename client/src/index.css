@@ -6,6 +6,8 @@
 @theme {
   --color-primary: #3b82f6;
   --color-secondary: #10b981;
+  --font-sans: "Outfit", sans-serif;
+  --font-serif: "Playfair Display", serif;
 }
 
 @custom-variant dark (&:is(.dark *));
