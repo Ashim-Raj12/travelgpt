@@ -59,9 +59,14 @@ export const LandingPage = () => {
         <DrawerContent className="h-[50vh]">
           <div className="mx-auto w-full max-w-sm flex flex-col gap-4 p-4 mt-8">
             <nav className="space-y-4">
-              <Button variant="ghost" className="w-full text-lg h-12" onClick={() => setMobileMenuOpen(false)}>Features</Button>
-              <Button variant="ghost" className="w-full text-lg h-12" onClick={() => setMobileMenuOpen(false)}>Destinations</Button>
+              <a href="#features" className="block w-full" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="ghost" className="w-full text-lg h-12">Features</Button>
+              </a>
+              <a href="#destinations" className="block w-full" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="ghost" className="w-full text-lg h-12">Destinations</Button>
+              </a>
               
+
               {isLoggedIn ? (
                 <>
                   <Link to="/dashboard" className="block w-full">
