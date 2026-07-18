@@ -1,10 +1,34 @@
 import { useTheme } from "@/components/theme-provider"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun, Menu, Sparkles } from "lucide-react"
-import { Link } from "react-router"
+import { Moon, Sun, Menu, Sparkles, LayoutDashboard, LogOut } from "lucide-react"
+import { Link, useNavigate } from "react-router"
+import { useState, useEffect } from "react"
+import { toast } from "sonner"
 
 export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const { theme, setTheme } = useTheme()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    fetch("/api/auth/me", { 
+      headers: { "Content-Type": "application/json" },
+      credentials: "include"
+    })
+      .then(res => setIsLoggedIn(res.ok))
+      .catch(() => setIsLoggedIn(false))
+  }, [])
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST", credentials: "include" })
+      setIsLoggedIn(false)
+      toast.success("Logged out successfully")
+      navigate("/")
+    } catch {
+      toast.error("Failed to log out")
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -22,9 +46,9 @@ export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
         </div>
 
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Features</Link>
-          <Link to="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Destinations</Link>
-          <Link to="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
+          <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Features</a>
+          <a href="#destinations" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Destinations</a>
+          <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Pricing</a>
         </nav>
 
         <div className="flex items-center gap-4">
@@ -38,12 +62,29 @@ export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
             <span className="sr-only">Toggle theme</span>
           </Button>
           <div className="hidden sm:flex items-center gap-2">
-            <Link to="/login">
-              <Button variant="ghost">Log in</Button>
-            </Link>
-            <Link to="/signup">
-              <Button>Sign up</Button>
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/dashboard">
+                  <Button variant="ghost" className="gap-2">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button onClick={handleLogout} variant="outline" className="gap-2">
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost">Log in</Button>
+                </Link>
+                <Link to="/signup">
+                  <Button>Sign up</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

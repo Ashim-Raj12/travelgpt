@@ -49,7 +49,8 @@ export const HeroSection = () => {
     setIsCheckingAuth(true)
     try {
       const response = await fetch("/api/auth/me", {
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
+        credentials: "include"
       })
       if (response.ok) {
         navigate(`/plan?destination=${encodeURIComponent(dest)}`)

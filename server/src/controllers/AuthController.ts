@@ -33,6 +33,18 @@ export class AuthController {
       next(error);
     }
   }
+
+  async getMe(req: Request, res: Response, next: NextFunction) {
+    try {
+      // The user is attached by the protect middleware
+      res.status(200).json({
+        status: "success",
+        user: (req as any).user
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const authController = new AuthController();
