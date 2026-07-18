@@ -21,7 +21,7 @@ export const SavedTripsPage = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const response = await fetch('/api/trips', { credentials: 'include' })
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips', { credentials: 'include' })
         if (!response.ok) throw new Error("Failed to fetch trips")
         
         const data = await response.json()

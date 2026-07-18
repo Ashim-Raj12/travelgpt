@@ -18,7 +18,7 @@ export const PopularDestinations = () => {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const response = await fetch("/api/trips/public/destinations")
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips/public/destinations")
         const result = await response.json()
         if (result.status === "success") {
           setDestinations(result.data)
@@ -36,7 +36,7 @@ export const PopularDestinations = () => {
     if (isCheckingAuth) return
     setIsCheckingAuth(true)
     try {
-      const response = await fetch("/api/auth/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/me", {
         headers: { "Content-Type": "application/json" },
         credentials: "include"
       })

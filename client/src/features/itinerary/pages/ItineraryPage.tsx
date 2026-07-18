@@ -32,7 +32,7 @@ export const ItineraryPage = () => {
       const durationNum = parseInt(formData?.durationDays || "7");
       const endDate = new Date(startDate.getTime() + durationNum * 24 * 60 * 60 * 1000);
       
-      const response = await fetch("/api/trips", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

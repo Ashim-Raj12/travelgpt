@@ -34,7 +34,8 @@ export const SearchPage = () => {
     setResults([])
 
     try {
-      const endpoint = activeTab === "flights" ? "/api/search/flights" : "/api/search/hotels"
+      const baseUrl = import.meta.env.VITE_API_URL || "";
+      const endpoint = activeTab === "flights" ? `${baseUrl}/api/search/flights` : `${baseUrl}/api/search/hotels`
       const res = await fetch(endpoint, {
         method: "POST",
         credentials: "include",

@@ -22,7 +22,7 @@ export const StepReview = ({ data, onBack, onSubmit }: Props) => {
     setIsGenerating(true)
     toast.info("AI is crafting your perfect itinerary...")
     try {
-      const response = await fetch("/api/ai/generate", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/ai/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

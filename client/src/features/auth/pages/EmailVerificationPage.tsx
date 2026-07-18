@@ -23,7 +23,7 @@ export const EmailVerificationPage = () => {
   const verifyToken = async (tokenString: string) => {
     setStatus("loading");
     try {
-      const response = await fetch(`/api/auth/verify/${tokenString}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/verify/${tokenString}`);
       const result = await response.json();
       
       if (!response.ok) {

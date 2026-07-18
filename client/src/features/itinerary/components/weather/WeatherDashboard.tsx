@@ -18,7 +18,7 @@ export const WeatherDashboard = ({ lat, lng }: { lat: number, lng: number }) => 
       try {
         setLoading(true)
         setError(false)
-        const response = await fetch(`/api/weather?lat=${lat}&lng=${lng}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/weather?lat=${lat}&lng=${lng}`, {
           credentials: "include"
         })
         if (!response.ok) {

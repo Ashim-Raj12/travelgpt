@@ -17,9 +17,9 @@ export const ProfilePage = () => {
     const fetchProfileData = async () => {
       try {
         const [userRes, statsRes, tripsRes] = await Promise.all([
-          fetch('/api/users/me', { credentials: 'include' }),
-          fetch('/api/trips/stats', { credentials: 'include' }),
-          fetch('/api/trips', { credentials: 'include' })
+          fetch(`${import.meta.env.VITE_API_URL || ""}/api/users/me', { credentials: 'include' }),
+          fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips/stats', { credentials: 'include' }),
+          fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips', { credentials: 'include' })
         ])
         
         if (userRes.ok) {
