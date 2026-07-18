@@ -10,6 +10,7 @@ import { OTPVerificationPage } from "@/features/auth/pages/OTPVerificationPage"
 import { EmailVerificationPage } from "@/features/auth/pages/EmailVerificationPage"
 import { ProfileCompletionPage } from "@/features/auth/pages/ProfileCompletionPage"
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage"
+import { SavedTripsPage } from "@/features/dashboard/pages/SavedTripsPage"
 import { PlannerPage } from "@/features/planner/pages/PlannerPage"
 import { ItineraryPage } from "@/features/itinerary/pages/ItineraryPage"
 import { SearchPage } from "@/features/search/pages/SearchPage"
@@ -29,6 +30,7 @@ function App() {
           <Route path="/verify-otp" element={<OTPVerificationPage />} />
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/saved-trips" element={<SavedTripsPage />} />
           <Route path="/plan" element={<PlannerPage />} />
           <Route path="/planner" element={<PlannerPage />} />
           <Route path="/itinerary/:id" element={<ItineraryPage />} />

@@ -66,8 +66,8 @@ export const ItineraryPage = () => {
     title: aiData?.overview?.title || formData.destination ? `${formData.destination} Trip` : mockItineraryData.title,
     destination: formData.destination || mockItineraryData.destination,
     duration: formData.durationDays ? `${formData.durationDays} Days` : mockItineraryData.duration,
-    travelers: formData.travelersCount && formData.travelersType 
-      ? `${formData.travelersCount} Person(s) (${formData.travelersType})` 
+    travelers: formData.travelersCount 
+      ? `${formData.travelersCount} Person(s)${formData.travelersType ? ` (${formData.travelersType})` : ''}` 
       : mockItineraryData.travelers,
     budgetLevel: formData.budget || mockItineraryData.budgetLevel,
     budget: aiData?.budget ? {

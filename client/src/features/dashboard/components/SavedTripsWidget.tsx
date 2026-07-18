@@ -59,7 +59,7 @@ export const SavedTripsWidget = ({ trips }: SavedTripsWidgetProps) => {
                     }}
                     className="w-[280px] shrink-0 overflow-hidden rounded-xl border bg-card hover:shadow-lg transition-shadow"
                   >
-                    <div className="h-32 relative group cursor-pointer overflow-hidden" onClick={() => navigate("/itinerary/new", { state: { destination: trip.destination, generatedItinerary: trip.generatedData } })}>
+                    <div className="h-32 relative group cursor-pointer overflow-hidden" onClick={() => navigate("/itinerary/new", { state: { destination: trip.destination, generatedItinerary: trip.generatedData, durationDays: diffDays, travelersCount: trip.travelers, budget: trip.budget } })}>
                       <motion.img 
                         whileHover={{ scale: 1.1 }}
                         transition={{ duration: 0.6 }}

@@ -89,11 +89,10 @@ const tripSchema = new Schema<ITrip>(
 );
 
 // Custom validation for dates
-tripSchema.pre("validate", function (next: any) {
+tripSchema.pre("validate", function () {
   if (this.startDate && this.endDate && this.startDate > this.endDate) {
     this.invalidate("endDate", "End date must be after start date.");
   }
-  next();
 });
 
 // Indexes

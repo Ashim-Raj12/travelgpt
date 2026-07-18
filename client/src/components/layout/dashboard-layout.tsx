@@ -23,7 +23,7 @@ const navItems = [
   { icon: Map, label: "Plan Trip", href: "/plan" },
   { icon: Search, label: "Search", href: "/search" },
   { icon: Compass, label: "Discover", href: "#" },
-  { icon: Heart, label: "Saved Trips", href: "#" },
+  { icon: Heart, label: "Saved Trips", href: "/saved-trips" },
   { icon: User, label: "Profile", href: "#" },
 ]
 

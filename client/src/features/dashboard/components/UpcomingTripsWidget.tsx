@@ -109,7 +109,7 @@ export const UpcomingTripsWidget = ({ trips }: UpcomingTripsWidgetProps) => {
           )}
 
           <div className="flex gap-3 mt-6">
-            <Button className="flex-1" variant="default" onClick={() => navigate("/itinerary/new", { state: { destination: upcomingTrip.destination, generatedItinerary: upcomingTrip.generatedData } })}>
+            <Button className="flex-1" variant="default" onClick={() => navigate("/itinerary/new", { state: { destination: upcomingTrip.destination, generatedItinerary: upcomingTrip.generatedData, durationDays: diffDays, travelersCount: upcomingTrip.travelers, budget: upcomingTrip.budget } })}>
               View Itinerary
             </Button>
             <Button className="flex-1" variant="outline" disabled>
