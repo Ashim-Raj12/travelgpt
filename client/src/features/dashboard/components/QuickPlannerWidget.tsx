@@ -4,8 +4,11 @@ import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { toast } from "sonner"
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router"
 
 export const QuickPlannerWidget = () => {
+  const navigate = useNavigate()
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -33,7 +36,7 @@ export const QuickPlannerWidget = () => {
           <form 
             onSubmit={(e) => {
               e.preventDefault()
-              toast.success("AI is generating your itinerary...")
+              navigate("/plan")
             }}
             className="flex flex-col sm:flex-row gap-3"
           >

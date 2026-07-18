@@ -10,6 +10,7 @@ import { OTPVerificationPage } from "@/features/auth/pages/OTPVerificationPage"
 import { EmailVerificationPage } from "@/features/auth/pages/EmailVerificationPage"
 import { ProfileCompletionPage } from "@/features/auth/pages/ProfileCompletionPage"
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage"
+import { PlannerPage } from "@/features/planner/pages/PlannerPage"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/verify-otp" element={<OTPVerificationPage />} />
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/plan" element={<PlannerPage />} />
         </Routes>
       </TooltipProvider>
     </ThemeProvider>
