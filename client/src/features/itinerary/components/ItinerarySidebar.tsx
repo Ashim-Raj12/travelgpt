@@ -3,19 +3,22 @@ import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Wallet, CloudSun, Phone, AlertCircle, PhoneCall, Stethoscope, MapPin } from "lucide-react"
 
-export const ItinerarySidebar = ({ data }: { data: any }) => {
+import { InteractiveMap } from "./InteractiveMap"
+
+export const ItinerarySidebar = ({ data, markers }: { data: any, markers?: any[] }) => {
   return (
     <div className="space-y-6">
-      {/* Map Placeholder */}
+      {/* Mini Interactive Map */}
       <Card className="overflow-hidden border-border/50">
-        <div className="h-[200px] bg-muted relative flex items-center justify-center">
-          {/* We would render a real Mapbox or Google Map here */}
-          <div className="absolute inset-0 opacity-40 bg-[url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/7.7491,46.0207,12/400x200?access_token=pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJja3AifQ.example')] bg-cover bg-center mix-blend-luminosity" />
-          <div className="relative z-10 flex flex-col items-center text-muted-foreground">
-            <MapPin className="h-8 w-8 mb-2 text-primary" />
-            <span className="font-medium text-sm">Interactive Map</span>
-            <span className="text-xs">Coming Soon</span>
-          </div>
+        <div className="h-[200px] relative">
+          {markers && markers.length > 0 ? (
+            <InteractiveMap markers={markers} />
+          ) : (
+            <div className="h-full bg-muted flex flex-col items-center justify-center text-muted-foreground">
+              <MapPin className="h-8 w-8 mb-2 text-primary" />
+              <span className="font-medium text-sm">No Location Data</span>
+            </div>
+          )}
         </div>
       </Card>
 

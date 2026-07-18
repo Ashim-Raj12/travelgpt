@@ -44,6 +44,34 @@ function MapBounds({ markers }: { markers: any[] }) {
   return null
 }
 
+// Component to handle Leaflet invalidation when its container is resized (e.g., when a tab becomes visible)
+function MapResizeObserver() {
+  const map = useMap()
+  
+  useEffect(() => {
+    // Explicitly invalidate size after a short delay to handle tab transitions
+    const timer1 = setTimeout(() => map.invalidateSize(), 100)
+    const timer2 = setTimeout(() => map.invalidateSize(), 500)
+    
+    const observer = new ResizeObserver(() => {
+      requestAnimationFrame(() => {
+        map.invalidateSize()
+      })
+    })
+    
+    const container = map.getContainer()
+    observer.observe(container)
+    
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      observer.disconnect()
+    }
+  }, [map])
+  
+  return null
+}
+
 interface MarkerData {
   id: string
   title: string
@@ -68,14 +96,15 @@ export const InteractiveMap = ({ markers }: InteractiveMapProps) => {
         zoom={13} 
         scrollWheelZoom={true} 
         className="w-full h-full"
-        style={{ background: "#0a0a0a" }} // Matches dark theme background
+        style={{ background: "#0a0a0a", height: "100%", width: "100%" }}
       >
-        {/* CartoDB Dark Matter Tile Layer */}
+        {/* Standard OpenStreetMap Tile Layer */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
+        <MapResizeObserver />
         <MapBounds markers={markers} />
 
         {markers.map((marker) => (

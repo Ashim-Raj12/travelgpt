@@ -30,16 +30,16 @@ export const DailyTimeline = ({ timeline }: Props) => {
   return (
     <div className="space-y-12">
       {timeline.map((day, dayIdx) => (
-        <div key={day.day} className="relative">
+        <div key={day.day || day.dayNumber || dayIdx} className="relative">
           {/* Day Header */}
           <div className="sticky top-16 z-20 bg-background/95 backdrop-blur py-4 mb-6 border-b">
             <h3 className="text-2xl font-bold flex items-center gap-3">
               <span className="bg-primary/10 text-primary px-3 py-1 rounded-lg text-lg">
-                Day {day.day}
+                Day {day.day || day.dayNumber || (dayIdx + 1)}
               </span>
-              {day.title}
+              {day.title || day.theme}
             </h3>
-            <p className="text-muted-foreground mt-1 text-sm font-medium">{day.date}</p>
+            {day.date && <p className="text-muted-foreground mt-1 text-sm font-medium">{day.date}</p>}
           </div>
 
           {/* Timeline */}
