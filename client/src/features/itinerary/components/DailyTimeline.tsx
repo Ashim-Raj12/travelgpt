@@ -43,9 +43,9 @@ export const DailyTimeline = ({ timeline }: Props) => {
           </div>
 
           {/* Timeline */}
-          <div className="relative pl-4 md:pl-8 space-y-8">
+          <div className="relative mt-8 space-y-8">
             {/* Vertical Line */}
-            <div className="absolute left-[31px] md:left-[47px] top-4 bottom-0 w-px bg-border" />
+            <div className="absolute left-[88px] md:left-[104px] top-4 bottom-0 w-px bg-border" />
 
             {day.activities.map((activity: any, actIdx: number) => (
               <motion.div 
@@ -54,20 +54,22 @@ export const DailyTimeline = ({ timeline }: Props) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: actIdx * 0.1 }}
-                className="relative flex gap-6"
+                className="relative flex items-start gap-4 md:gap-6"
               >
                 {/* Time Indicator */}
-                <div className="w-16 pt-1 text-right shrink-0">
+                <div className="w-16 md:w-20 pt-1.5 text-right shrink-0">
                   <span className="text-sm font-bold text-muted-foreground">{activity.time}</span>
                 </div>
 
                 {/* Icon Node */}
-                <div className={`absolute left-[16px] md:left-[32px] w-8 h-8 rounded-full flex items-center justify-center shadow-sm z-10 ${getColorForType(activity.type)}`}>
-                  {getIconForType(activity.type)}
+                <div className="relative z-10 flex flex-col items-center shrink-0">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-sm ${getColorForType(activity.type)}`}>
+                    {getIconForType(activity.type)}
+                  </div>
                 </div>
 
                 {/* Content Card */}
-                <Card className="flex-1 border-border/50 shadow-sm hover:shadow-md transition-shadow">
+                <Card className="flex-1 border-border/50 shadow-sm hover:shadow-md transition-shadow mb-4">
                   <CardContent className="p-4 md:p-5">
                     <h4 className="font-semibold text-lg mb-2">{activity.title}</h4>
                     <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
