@@ -49,6 +49,10 @@ export const LoginPage = () => {
         throw new Error(result.message || "Login failed")
       }
       
+      if (result.token) {
+        localStorage.setItem("travelgpt_token", result.token);
+      }
+      
       toast.success("Successfully logged in!")
       navigate(redirectUrl)
     } catch (error: any) {

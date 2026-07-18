@@ -22,6 +22,7 @@ export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const handleLogout = async () => {
     try {
       await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/logout`, { method: "POST", credentials: "include" })
+      localStorage.removeItem("travelgpt_token");
       setIsLoggedIn(false)
       toast.success("Logged out successfully")
       navigate("/")

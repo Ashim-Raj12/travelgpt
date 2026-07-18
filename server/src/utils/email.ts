@@ -14,6 +14,10 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         },
       });
     } else {
+      if (process.env.NODE_ENV === "production") {
+        console.log("Skipping email verification because SMTP_USER is not set in production.");
+        return;
+      }
       // Fallback to Ethereal Email (Local Development)
       const testAccount = await nodemailer.createTestAccount();
       transporter = nodemailer.createTransport({
@@ -27,7 +31,8 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       });
     }
 
-    const verificationUrl = `http://localhost:5173/verify-email?token=${token}`;
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+    const verificationUrl = `${clientUrl}/verify-email?token=${token}`;
 
     const info = await transporter.sendMail({
       from: '"TravelGPT" <noreply@travelgpt.com>',
