@@ -1,81 +1,62 @@
-import { CheckCircle2, Plane, Download, Sparkles } from "lucide-react"
+import { MapPin, Plus, Save } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
 
-const activities = [
-  {
-    icon: Sparkles,
-    title: "Generated Itinerary",
-    description: "Tokyo Culinary Tour created by AI",
-    time: "2 hours ago",
-    iconColor: "text-primary",
-    bgColor: "bg-primary/10",
-  },
-  {
-    icon: CheckCircle2,
-    title: "Accommodation Booked",
-    description: "The Omnia Hotel, Zermatt",
-    time: "Yesterday",
-    iconColor: "text-green-500",
-    bgColor: "bg-green-500/10",
-  },
-  {
-    icon: Download,
-    title: "PDF Exported",
-    description: "Swiss Alps Itinerary downloaded",
-    time: "3 days ago",
-    iconColor: "text-blue-500",
-    bgColor: "bg-blue-500/10",
-  },
-  {
-    icon: Plane,
-    title: "Flight Updated",
-    description: "LX 803 departure time changed",
-    time: "1 week ago",
-    iconColor: "text-amber-500",
-    bgColor: "bg-amber-500/10",
-  },
-]
+interface RecentActivityWidgetProps {
+  trips: any[]
+}
 
-export const RecentActivityWidget = () => {
+export const RecentActivityWidget = ({ trips }: RecentActivityWidgetProps) => {
+  // Generate some recent activity based on the trips
+  // In a real app, you'd have a separate Activity feed API
+  const activities = trips.slice(0, 3).map((trip, i) => ({
+    id: i + 1,
+    action: i === 0 ? "Saved" : "Planned",
+    target: trip.title,
+    time: i === 0 ? "Just now" : `${i + 2} days ago`,
+    icon: i === 0 ? Save : Plus,
+  }))
+
+  if (activities.length === 0) {
+    activities.push({
+      id: 999,
+      action: "Created",
+      target: "Account",
+      time: "Recently",
+      icon: Plus,
+    })
+  }
+
   return (
-    <Card className="border-border/50 h-full flex flex-col">
-      <CardHeader className="pb-4">
-        <CardTitle className="font-semibold text-lg">Recent Activity</CardTitle>
+    <Card className="border-border/50">
+      <CardHeader className="pb-3">
+        <CardTitle className="font-semibold text-sm flex items-center gap-2">
+          Recent Activity
+        </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1">
-        <motion.div 
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: { opacity: 1, transition: { staggerChildren: 0.1 } }
-          }}
-          className="space-y-6"
-        >
+      <CardContent>
+        <div className="space-y-4">
           {activities.map((activity, i) => (
             <motion.div 
-              key={i} 
-              variants={{
-                hidden: { opacity: 0, x: -20 },
-                show: { opacity: 1, x: 0 }
-              }}
-              className="flex gap-4 relative"
+              key={activity.id}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 * i }}
+              className="flex items-start gap-3"
             >
-              {i !== activities.length - 1 && (
-                <div className="absolute left-[19px] top-10 bottom-[-24px] w-px bg-border" />
-              )}
-              <div className={`h-10 w-10 shrink-0 rounded-full ${activity.bgColor} flex items-center justify-center relative z-10`}>
-                <activity.icon className={`h-4 w-4 ${activity.iconColor}`} />
+              <div className="bg-primary/10 p-2 rounded-full shrink-0">
+                <activity.icon className="h-3.5 w-3.5 text-primary" />
               </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium leading-none">{activity.title}</p>
-                <p className="text-sm text-muted-foreground">{activity.description}</p>
-                <p className="text-xs text-muted-foreground/70">{activity.time}</p>
+              <div>
+                <p className="text-sm">
+                  <span className="font-medium text-foreground">{activity.action}</span>{" "}
+                  <span className="text-muted-foreground">{activity.target}</span>
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5">{activity.time}</p>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </CardContent>
     </Card>
   )

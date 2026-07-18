@@ -7,7 +7,6 @@ import { DailyForecastWidget } from "./DailyForecastWidget"
 import { WeatherDetailsWidget } from "./WeatherDetailsWidget"
 import { RainAlertsWidget } from "./RainAlertsWidget"
 import { CloudOff } from "lucide-react"
-import { api } from "@/lib/api"
 
 export const WeatherDashboard = ({ lat, lng }: { lat: number, lng: number }) => {
   const [data, setData] = useState<any>(null)
@@ -19,8 +18,14 @@ export const WeatherDashboard = ({ lat, lng }: { lat: number, lng: number }) => 
       try {
         setLoading(true)
         setError(false)
-        const response = await api.get(`/weather?lat=${lat}&lng=${lng}`)
-        setData(response.data.data)
+        const response = await fetch(`/api/weather?lat=${lat}&lng=${lng}`, {
+          credentials: "include"
+        })
+        if (!response.ok) {
+           throw new Error('Failed to fetch weather data')
+        }
+        const result = await response.json()
+        setData(result.data)
       } catch (err) {
         console.error("Failed to fetch weather:", err)
         setError(true)

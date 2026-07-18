@@ -2,32 +2,9 @@ import { Globe, PlaneTakeoff, Map, CalendarHeart } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
 
-const stats = [
-  {
-    title: "Countries Visited",
-    value: "12",
-    icon: Globe,
-    description: "+2 from last year",
-  },
-  {
-    title: "Total Trips",
-    value: "28",
-    icon: PlaneTakeoff,
-    description: "4 upcoming",
-  },
-  {
-    title: "Cities Explored",
-    value: "45",
-    icon: Map,
-    description: "Across 4 continents",
-  },
-  {
-    title: "Days Traveled",
-    value: "184",
-    icon: CalendarHeart,
-    description: "In the last 5 years",
-  },
-]
+interface TravelStatsWidgetProps {
+  stats: any
+}
 
 const container = {
   hidden: { opacity: 0 },
@@ -42,7 +19,34 @@ const item = {
   show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
 }
 
-export const TravelStatsWidget = () => {
+export const TravelStatsWidget = ({ stats }: TravelStatsWidgetProps) => {
+  const dynamicStats = [
+    {
+      title: "Countries Visited",
+      value: stats?.countriesVisited || "0",
+      icon: Globe,
+      description: "Based on unique destinations",
+    },
+    {
+      title: "Total Trips",
+      value: stats?.totalTrips || "0",
+      icon: PlaneTakeoff,
+      description: `${stats?.upcomingTrips || 0} upcoming`,
+    },
+    {
+      title: "Cities Explored",
+      value: stats?.countriesVisited || "0",
+      icon: Map,
+      description: "Unique cities visited",
+    },
+    {
+      title: "Days Traveled",
+      value: stats?.daysTraveled || "0",
+      icon: CalendarHeart,
+      description: "Total travel duration",
+    },
+  ]
+
   return (
     <motion.div 
       variants={container} 
@@ -50,7 +54,7 @@ export const TravelStatsWidget = () => {
       animate="show" 
       className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"
     >
-      {stats.map((stat, i) => (
+      {dynamicStats.map((stat, i) => (
         <motion.div 
           key={i} 
           variants={item}

@@ -16,7 +16,7 @@ export interface IDay {
 
 export interface ITrip extends Document {
   user: mongoose.Types.ObjectId;
-  destination: mongoose.Types.ObjectId;
+  destination: string;
   title: string;
   startDate: Date;
   endDate: Date;
@@ -25,6 +25,7 @@ export interface ITrip extends Document {
   travelStyle?: string;
   status: "planning" | "upcoming" | "ongoing" | "completed";
   itinerary: IDay[];
+  generatedData?: any;
 }
 
 const activitySchema = new Schema<IActivity>({
@@ -49,8 +50,7 @@ const tripSchema = new Schema<ITrip>(
       required: [true, "Trip must belong to a user"],
     },
     destination: {
-      type: Schema.Types.ObjectId,
-      ref: "Destination",
+      type: String,
       required: [true, "Trip must have a destination"],
     },
     title: {
@@ -83,6 +83,7 @@ const tripSchema = new Schema<ITrip>(
       default: "planning",
     },
     itinerary: [daySchema],
+    generatedData: { type: Schema.Types.Mixed },
   },
   { timestamps: true }
 );

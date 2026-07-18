@@ -40,12 +40,14 @@ import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import aiRoutes from "./routes/aiRoutes";
 import weatherRoutes from "./routes/weatherRoutes";
+import tripRoutes from "./routes/tripRoutes";
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/weather", weatherRoutes);
+app.use("/api/trips", tripRoutes);
 
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "success", message: "Server is healthy" });

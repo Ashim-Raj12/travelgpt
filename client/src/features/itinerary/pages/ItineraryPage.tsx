@@ -11,6 +11,7 @@ import { mockItineraryData } from "../data/mockItineraryData"
 
 import { InteractiveMap } from "../components/InteractiveMap"
 import { WeatherDashboard } from "../components/weather/WeatherDashboard"
+import { toast } from "sonner"
 
 export const ItineraryPage = () => {
   const location = useLocation()
@@ -18,6 +19,42 @@ export const ItineraryPage = () => {
   const formData = location.state
   
   const aiData = formData?.generatedItinerary || null
+
+  const handleSaveTrip = async () => {
+    if (!aiData) {
+      toast.error("No trip data to save.");
+      return;
+    }
+    
+    try {
+      // Default to starting in 30 days
+      const startDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+      const durationNum = parseInt(formData?.durationDays || "7");
+      const endDate = new Date(startDate.getTime() + durationNum * 24 * 60 * 60 * 1000);
+      
+      const response = await fetch("/api/trips", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          title: aiData.overview?.title || formData?.destination + " Trip",
+          destination: formData?.destination || "Unknown Destination",
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
+          budget: formData?.budget || "moderate",
+          travelers: parseInt(formData?.travelersCount || "1"),
+          travelStyle: formData?.travelStyle,
+          generatedData: aiData
+        })
+      });
+      
+      if (!response.ok) throw new Error("Failed to save");
+      toast.success("Trip saved successfully to Dashboard!");
+    } catch (error) {
+      toast.error("Could not save trip. Make sure you are logged in.");
+      throw error;
+    }
+  }
 
   // Map AI data to frontend components or fallback to mock
   const data = formData ? {
@@ -90,7 +127,7 @@ export const ItineraryPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 print:hidden">
             <h2 className="text-2xl font-bold tracking-tight">Your Detailed Plan</h2>
-            <ItineraryActions />
+            <ItineraryActions onSave={handleSaveTrip} />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
