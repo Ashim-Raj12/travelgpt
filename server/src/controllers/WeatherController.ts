@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
 import { WeatherService } from '../services/WeatherService';
-import { ApiError } from '../utils/ApiError';
+import { AppError } from '../utils/AppError';
 
 export const weatherQuerySchema = z.object({
   query: z.object({

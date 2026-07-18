@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ApiError } from '../utils/ApiError';
+import { AppError } from '../utils/AppError';
 
 export class WeatherService {
   private static readonly API_KEY = process.env.OPENWEATHER_API_KEY;
@@ -12,7 +12,7 @@ export class WeatherService {
    */
   static async getWeatherData(lat: number, lon: number) {
     if (!this.API_KEY) {
-      throw new ApiError(500, 'OPENWEATHER_API_KEY is not configured in the server environment.');
+      throw new AppError('OPENWEATHER_API_KEY is not configured in the server environment.', 500);
     }
 
     try {
@@ -80,10 +80,10 @@ export class WeatherService {
       };
     } catch (error: any) {
       if (error.response?.status === 401) {
-         throw new ApiError(401, 'Invalid OpenWeather API Key or One Call 3.0 subscription not activated.');
+         throw new AppError('Invalid OpenWeather API Key or One Call 3.0 subscription not activated.', 401);
       }
       console.error("Weather API Error:", error.response?.data || error.message);
-      throw new ApiError(500, 'Failed to fetch weather data from OpenWeather API.');
+      throw new AppError('Failed to fetch weather data from OpenWeather API.', 500);
     }
   }
 }
