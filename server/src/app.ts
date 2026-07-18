@@ -1,28 +1,58 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
+import express, { Express, Request, Response, NextFunction } from "express";
+import cors from "cors";
+import helmet from "helmet";
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import rateLimit from "express-rate-limit";
+import { globalErrorHandler } from "./middlewares/errorMiddleware";
+import { AppError } from "./utils/AppError";
 
-const app: Application = express();
+const app: Express = express();
 
-// Global Middlewares
-app.use(cors());
+// Security Middlewares
 app.use(helmet());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true, // Allow cookies
+  })
+);
+
+// Rate Limiting
+const limiter = rateLimit({
+  max: 1000,
+  windowMs: 60 * 60 * 1000, // 1 hour
+  message: "Too many requests from this IP, please try again in an hour!",
+});
+app.use("/api", limiter);
+
+// Body Parsing
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 
-// Base Route
-app.get('/api/health', (req: Request, res: Response) => {
-  res.status(200).json({ status: 'ok', message: 'TravelGPT API is running' });
+// Logging
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
+
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+
+app.get("/api/health", (req: Request, res: Response) => {
+  res.status(200).json({ status: "success", message: "Server is healthy" });
+});
+
+// Unhandled Routes
+app.use((req: Request, res: Response, next: NextFunction) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 // Global Error Handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Internal Server Error' });
-});
+app.use(globalErrorHandler);
 
 export default app;
