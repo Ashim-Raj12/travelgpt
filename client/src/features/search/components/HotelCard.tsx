@@ -12,6 +12,7 @@ interface Hotel {
   distanceFromCenter: number
   amenities: string[]
   imageType: string
+  searchContext?: { origin: string, destination: string }
 }
 
 interface HotelCardProps {
@@ -28,6 +29,10 @@ const getHotelImage = (type: string) => {
 }
 
 export const HotelCard = ({ hotel }: HotelCardProps) => {
+  const destination = hotel.searchContext?.destination || "";
+  const mapQuery = `${hotel.name} ${destination}`.trim();
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -51,7 +56,7 @@ export const HotelCard = ({ hotel }: HotelCardProps) => {
             <div className="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold font-serif">{hotel.name}</h3>
+                  <h3 className="text-xl font-bold font-serif cursor-pointer hover:text-primary transition-colors" onClick={() => window.open(mapUrl, "_blank")}>{hotel.name}</h3>
                   <div className="flex items-center gap-1 bg-amber-500/10 text-amber-500 px-2 py-1 rounded-md text-sm font-medium">
                     <Star className="h-4 w-4 fill-amber-500" />
                     {hotel.rating.toFixed(1)}
@@ -89,7 +94,7 @@ export const HotelCard = ({ hotel }: HotelCardProps) => {
                 <p className="text-3xl font-bold text-primary">${hotel.pricePerNight}</p>
                 <p className="text-xs text-muted-foreground mt-1">Includes taxes & fees</p>
               </div>
-              <Button className="w-full">View Rooms</Button>
+              <Button className="w-full" onClick={() => window.open(mapUrl, "_blank")}>View on Map</Button>
             </div>
           </div>
         </CardContent>

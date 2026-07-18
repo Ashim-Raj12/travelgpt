@@ -151,7 +151,7 @@ export const ItineraryPage = () => {
                 </TabsContent>
                 
                 <TabsContent value="places" className="mt-0 print:block">
-                  <ItineraryPlaces hotels={data.hotels} restaurants={data.restaurants} />
+                  <ItineraryPlaces hotels={data.hotels} restaurants={data.restaurants} destination={data.destination} />
                 </TabsContent>
 
                 <TabsContent value="map" className="mt-0 print:block">

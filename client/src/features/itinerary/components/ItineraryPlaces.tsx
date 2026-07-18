@@ -2,7 +2,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Star, MapPin } from "lucide-react"
 
-export const ItineraryPlaces = ({ hotels, restaurants }: { hotels: any[], restaurants: any[] }) => {
+export const ItineraryPlaces = ({ hotels, restaurants, destination = "" }: { hotels: any[], restaurants: any[], destination?: string }) => {
+  const getMapUrl = (name: string) => {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${destination}`.trim())}`
+  }
+
   return (
     <div className="space-y-12">
       {/* Hotels */}
@@ -11,7 +15,10 @@ export const ItineraryPlaces = ({ hotels, restaurants }: { hotels: any[], restau
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {hotels.map((hotel, i) => (
             <Card key={i} className="overflow-hidden border-border/50 hover:shadow-md transition-shadow group">
-              <div className="h-48 overflow-hidden relative">
+              <div 
+                className="h-48 overflow-hidden relative cursor-pointer" 
+                onClick={() => window.open(getMapUrl(hotel.name), "_blank")}
+              >
                 <img 
                   src={hotel.image} 
                   alt={hotel.name} 
@@ -24,8 +31,13 @@ export const ItineraryPlaces = ({ hotels, restaurants }: { hotels: any[], restau
               <CardContent className="p-5">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h4 className="font-semibold text-lg">{hotel.name}</h4>
-                    <Badge variant="secondary" className="mt-1">{hotel.type}</Badge>
+                    <h4 
+                      className="font-semibold text-lg cursor-pointer hover:text-primary transition-colors"
+                      onClick={() => window.open(getMapUrl(hotel.name), "_blank")}
+                    >
+                      {hotel.name}
+                    </h4>
+                    <Badge variant="secondary" className="mt-1">{hotel.type || "Hotel"}</Badge>
                   </div>
                   <div className="text-right">
                     <span className="font-bold text-lg">{hotel.pricePerNight}</span>
@@ -45,7 +57,10 @@ export const ItineraryPlaces = ({ hotels, restaurants }: { hotels: any[], restau
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {restaurants.map((place, i) => (
             <Card key={i} className="overflow-hidden border-border/50 hover:shadow-md transition-shadow group flex flex-row h-32">
-              <div className="w-1/3 overflow-hidden relative shrink-0">
+              <div 
+                className="w-1/3 overflow-hidden relative shrink-0 cursor-pointer"
+                onClick={() => window.open(getMapUrl(place.name), "_blank")}
+              >
                 <img 
                   src={place.image} 
                   alt={place.name} 
@@ -54,7 +69,12 @@ export const ItineraryPlaces = ({ hotels, restaurants }: { hotels: any[], restau
               </div>
               <CardContent className="p-4 flex flex-col justify-center flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-semibold">{place.name}</h4>
+                  <h4 
+                    className="font-semibold cursor-pointer hover:text-primary transition-colors"
+                    onClick={() => window.open(getMapUrl(place.name), "_blank")}
+                  >
+                    {place.name}
+                  </h4>
                   <div className="flex items-center gap-1 text-xs font-semibold">
                     <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" /> {place.rating}
                   </div>

@@ -13,6 +13,7 @@ interface Flight {
   stops: number
   price: number
   rating: number
+  searchContext?: { origin: string, destination: string }
 }
 
 interface FlightCardProps {
@@ -20,6 +21,10 @@ interface FlightCardProps {
 }
 
 export const FlightCard = ({ flight }: FlightCardProps) => {
+  const origin = flight.searchContext?.origin || "";
+  const destination = flight.searchContext?.destination || "";
+  const bookUrl = `https://www.google.com/travel/flights?q=Flights%20from%20${encodeURIComponent(origin)}%20to%20${encodeURIComponent(destination)}%20on%20${encodeURIComponent(flight.airline)}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -78,7 +83,7 @@ export const FlightCard = ({ flight }: FlightCardProps) => {
             <div className="p-6 md:w-48 flex flex-col justify-center items-center border-t md:border-t-0 md:border-l border-border/50 bg-muted/10">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Per traveler</p>
               <p className="text-3xl font-bold text-primary mb-4">${flight.price}</p>
-              <Button className="w-full">Select</Button>
+              <Button className="w-full" onClick={() => window.open(bookUrl, "_blank", "noopener,noreferrer")}>Book Ticket</Button>
             </div>
           </div>
         </CardContent>
