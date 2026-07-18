@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useTheme } from "@/components/theme-provider"
 import { Moon, Sun, Sparkles } from "lucide-react"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import {
   Popover,
   PopoverContent,
