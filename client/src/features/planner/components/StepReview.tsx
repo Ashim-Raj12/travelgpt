@@ -9,20 +9,30 @@ import { useState } from "react"
 interface Props {
   data: Partial<PlannerData>
   onBack: () => void
-  onSubmit: () => void
+  onSubmit: (itinerary: any) => void
 }
 
 export const StepReview = ({ data, onBack, onSubmit }: Props) => {
   const [isGenerating, setIsGenerating] = useState(false)
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     setIsGenerating(true)
     toast.info("AI is crafting your perfect itinerary...")
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.message || "Failed to generate itinerary")
+      
       setIsGenerating(false)
-      onSubmit()
-    }, 2000)
+      onSubmit(result.data.itinerary)
+    } catch (error: any) {
+      setIsGenerating(false)
+      toast.error(error.message || "An error occurred while generating the itinerary.")
+    }
   }
 
   return (

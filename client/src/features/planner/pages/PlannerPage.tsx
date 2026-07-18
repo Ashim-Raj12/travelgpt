@@ -33,9 +33,9 @@ export const PlannerPage = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1))
   }
 
-  const handleFinish = () => {
+  const handleFinish = (itinerary: any) => {
     toast.success("Itinerary generated successfully!")
-    navigate("/itinerary/new", { state: formData })
+    navigate("/itinerary/new", { state: { ...formData, generatedItinerary: itinerary } })
   }
 
   const handleClose = () => {

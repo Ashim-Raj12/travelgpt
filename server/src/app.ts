@@ -38,10 +38,12 @@ if (process.env.NODE_ENV === "development") {
 
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
+import aiRoutes from "./routes/aiRoutes";
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "success", message: "Server is healthy" });
