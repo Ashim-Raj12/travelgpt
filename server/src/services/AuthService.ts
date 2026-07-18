@@ -12,7 +12,7 @@ const createSendToken = (user: any, statusCode: number, res: Response) => {
   const token = signToken(
     user._id.toString(),
     process.env.JWT_SECRET || "supersecretjwtkey_change_in_production",
-    process.env.JWT_EXPIRES_IN || "15m"
+    process.env.JWT_EXPIRES_IN || "7d"
   );
 
   const refreshToken = signToken(
@@ -22,7 +22,7 @@ const createSendToken = (user: any, statusCode: number, res: Response) => {
   );
 
   const cookieOptions = {
-    expires: new Date(Date.now() + 15 * 60 * 1000), // 15 mins
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict" as const,
