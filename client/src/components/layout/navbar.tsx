@@ -38,12 +38,12 @@ export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
             <span className="sr-only">Toggle theme</span>
           </Button>
           <div className="hidden sm:flex items-center gap-2">
-            <Button variant="ghost" asChild>
-              <Link to="/login">Log in</Link>
-            </Button>
-            <Button asChild>
-              <Link to="/signup">Sign up</Link>
-            </Button>
+            <Link to="/login">
+              <Button variant="ghost">Log in</Button>
+            </Link>
+            <Link to="/signup">
+              <Button>Sign up</Button>
+            </Link>
           </div>
         </div>
       </div>

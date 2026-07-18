@@ -11,6 +11,8 @@ export interface IUser extends Document {
     currency: string;
     language: string;
   };
+  isVerified: boolean;
+  verificationToken?: string;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -43,15 +45,21 @@ const userSchema = new Schema<IUser>(
       currency: { type: String, default: "USD" },
       language: { type: String, default: "en" },
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
 
 // Hash password before saving
-userSchema.pre("save", async function (next: any) {
-  if (!this.isModified("password") || !this.password) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password") || !this.password) return;
   this.password = await bcrypt.hash(this.password, 12);
-  next();
 });
 
 // Compare password method

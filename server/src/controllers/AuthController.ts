@@ -10,6 +10,14 @@ export class AuthController {
     }
   }
 
+  async verifyEmail(req: Request, res: Response, next: NextFunction) {
+    try {
+      await authService.verifyEmail(req.params.token, res);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       await authService.login(req.body, res);

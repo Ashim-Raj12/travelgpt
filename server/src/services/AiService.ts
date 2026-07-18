@@ -15,13 +15,13 @@ interface TripInput {
 }
 
 export class AiService {
-  constructor() {
+  constructor() {}
+
+  public async generateItinerary(input: TripInput) {
     if (!process.env.GEMINI_API_KEY) {
       console.warn("GEMINI_API_KEY is not defined. AI generation will fail.");
     }
-  }
-
-  public async generateItinerary(input: TripInput) {
+    
     try {
       const { GoogleGenAI } = await import("@google/genai");
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "missing" });
@@ -29,7 +29,7 @@ export class AiService {
       const prompt = this.constructPrompt(input);
       
       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3.5-flash",
         contents: prompt,
         config: {
           responseMimeType: "application/json",

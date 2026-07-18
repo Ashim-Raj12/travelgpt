@@ -65,11 +65,9 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             </Button>
 
             <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full relative">
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" />
-                </Button>
+              <PopoverTrigger render={<Button variant="ghost" size="icon" className="rounded-full relative" />}>
+                <Bell className="h-5 w-5" />
+                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" />
               </PopoverTrigger>
               <PopoverContent align="end" className="w-80">
                 <div className="flex flex-col gap-2">

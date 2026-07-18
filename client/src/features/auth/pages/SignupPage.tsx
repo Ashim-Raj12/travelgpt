@@ -34,12 +34,30 @@ export const SignupPage = () => {
 
   async function onSubmit(data: SignupInput) {
     setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
-    
-    toast.success("Account created successfully! Please check your email.")
-    navigate("/verify-email")
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: data.name.split(" ")[0] || data.name,
+          lastName: data.name.split(" ").slice(1).join(" ") || "User",
+          email: data.email,
+          password: data.password
+        }),
+      })
+      const result = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(result.message || "Registration failed")
+      }
+      
+      toast.success(result.message || "Account created! Please check your email.")
+      navigate("/verify-email")
+    } catch (error: any) {
+      toast.error(error.message || "An error occurred during registration.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

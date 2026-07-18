@@ -50,6 +50,9 @@ const createSendToken = (user: any, statusCode: number, res: Response) => {
   });
 };
 
+import crypto from "crypto";
+import { sendVerificationEmail } from "../utils/email";
+
 export class AuthService {
   async register(userData: any, res: Response) {
     const existingUser = await userRepository.findByEmail(userData.email);
@@ -57,8 +60,39 @@ export class AuthService {
       throw new AppError("Email already in use", 400);
     }
 
-    const newUser = await userRepository.create(userData);
-    createSendToken(newUser, 201, res);
+    // Create a random token
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+
+    const newUser = await userRepository.create({
+      ...userData,
+      verificationToken,
+      isVerified: false,
+    });
+
+    // Send verification email
+    await sendVerificationEmail(newUser.email, verificationToken);
+
+    res.status(201).json({
+      status: "success",
+      message: "Registration successful. Please check your email to verify your account.",
+    });
+  }
+
+  async verifyEmail(token: string, res: Response) {
+    const user = await userRepository.findByVerificationToken(token);
+    
+    if (!user) {
+      throw new AppError("Invalid or expired verification token.", 400);
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    await user.save();
+
+    res.status(200).json({
+      status: "success",
+      message: "Email successfully verified. You can now log in.",
+    });
   }
 
   async login(userData: any, res: Response) {
@@ -72,6 +106,10 @@ export class AuthService {
 
     if (!user || !(await user.comparePassword(password))) {
       throw new AppError("Incorrect email or password", 401);
+    }
+
+    if (!user.isVerified) {
+      throw new AppError("Please verify your email address before logging in.", 401);
     }
 
     createSendToken(user, 200, res);

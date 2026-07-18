@@ -34,15 +34,25 @@ export const LoginPage = () => {
 
   async function onSubmit(data: LoginInput) {
     setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
-    
-    if (data.email === "test@example.com") {
-      toast.error("Invalid credentials. Please try again.")
-    } else {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(data),
+      })
+      const result = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(result.message || "Login failed")
+      }
+      
       toast.success("Successfully logged in!")
       navigate("/dashboard")
+    } catch (error: any) {
+      toast.error(error.message || "An error occurred during login.")
+    } finally {
+      setIsLoading(false)
     }
   }
 
