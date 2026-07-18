@@ -113,31 +113,24 @@ export const InteractiveMap = ({ markers }: InteractiveMapProps) => {
             position={[marker.lat, marker.lng]}
             icon={icons[marker.type]}
           >
-            <Popup className="custom-popup">
+            <Popup>
               <div className="p-1">
-                <h3 className="font-bold text-sm mb-1">{marker.title}</h3>
+                <a 
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(marker.title)}+${marker.lat},${marker.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-sm mb-1 text-black hover:text-blue-600 transition-colors block hover:underline"
+                >
+                  {marker.title} ↗
+                </a>
                 {marker.subtitle && (
-                  <p className="text-xs text-muted-foreground">{marker.subtitle}</p>
+                  <p className="text-xs text-gray-600">{marker.subtitle}</p>
                 )}
               </div>
             </Popup>
           </Marker>
         ))}
       </MapContainer>
-      
-      {/* CSS override for Leaflet in Dark Mode */}
-      <style>{`
-        .leaflet-container {
-          font-family: inherit;
-        }
-        .custom-popup .leaflet-popup-content-wrapper,
-        .custom-popup .leaflet-popup-tip {
-          background: hsl(var(--card));
-          color: hsl(var(--card-foreground));
-          border: 1px solid hsl(var(--border));
-          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-      `}</style>
     </div>
   )
 }
