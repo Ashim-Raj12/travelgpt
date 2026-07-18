@@ -10,10 +10,10 @@ window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   const token = localStorage.getItem("travelgpt_token");
   if (token) {
     init = init || {};
-    init.headers = {
-      ...init.headers,
-      "Authorization": `Bearer ${token}`
-    };
+    // Safely handle Headers object or plain object
+    let newHeaders = new Headers(init.headers || {});
+    newHeaders.set("Authorization", `Bearer ${token}`);
+    init.headers = newHeaders;
   }
   return originalFetch(input, init);
 };
