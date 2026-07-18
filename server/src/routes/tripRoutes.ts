@@ -4,7 +4,10 @@ import { protect } from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
-router.use(protect); // All trip routes require auth
+// Public routes
+router.get('/public/destinations', tripController.getPublicDestinations);
+
+router.use(protect); // All trip routes below require auth
 
 router.get('/stats', tripController.getDashboardStats);
 router.post('/', tripController.createTrip);

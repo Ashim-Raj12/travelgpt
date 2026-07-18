@@ -22,6 +22,8 @@ import { loginSchema, type LoginInput } from "../schemas"
 export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+  const searchParams = new URLSearchParams(window.location.search)
+  const redirectUrl = searchParams.get("redirect") || "/dashboard"
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -48,7 +50,7 @@ export const LoginPage = () => {
       }
       
       toast.success("Successfully logged in!")
-      navigate("/dashboard")
+      navigate(redirectUrl)
     } catch (error: any) {
       toast.error(error.message || "An error occurred during login.")
     } finally {

@@ -24,6 +24,15 @@ export const PlannerPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<Partial<PlannerData>>({})
 
+  // If a destination was passed in the URL (e.g. from Landing Page), pre-fill and stay on step 1
+  useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    const destParam = params.get("destination")
+    if (destParam) {
+      setFormData(prev => ({ ...prev, destination: destParam }))
+    }
+  })
+
   const handleNext = (stepData: Partial<PlannerData>) => {
     setFormData((prev) => ({ ...prev, ...stepData }))
     setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS))

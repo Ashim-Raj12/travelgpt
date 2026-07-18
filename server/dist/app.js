@@ -8,12 +8,14 @@ const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
+const compression_1 = __importDefault(require("compression"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const errorMiddleware_1 = require("./middlewares/errorMiddleware");
 const AppError_1 = require("./utils/AppError");
 const app = (0, express_1.default)();
 // Security Middlewares
 app.use((0, helmet_1.default)());
+app.use((0, compression_1.default)());
 app.use((0, cors_1.default)({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true, // Allow cookies

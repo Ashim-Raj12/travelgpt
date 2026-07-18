@@ -3,6 +3,53 @@ import { Trip } from "../models/TripModel";
 import { AppError } from "../utils/AppError";
 
 class TripController {
+  public async getPublicDestinations(req: Request, res: Response, next: NextFunction) {
+    try {
+      // Aggregate popular destinations by counting occurrences in trips
+      const popularDestinations = await Trip.aggregate([
+        {
+          $group: {
+            _id: "$destination.name",
+            count: { $sum: 1 },
+            image: { $first: { $arrayElemAt: ["$generatedData.hotels.image", 0] } }
+          }
+        },
+        { $sort: { count: -1 } },
+        { $limit: 6 }
+      ]);
+      
+      // If we don't have enough trips yet, provide some beautiful fallbacks so the landing page doesn't look empty
+      let finalDestinations = popularDestinations.map(d => ({
+        name: d._id,
+        count: d.count,
+        image: d.image || "/images/dest_tokyo_1784370032130.png"
+      }));
+
+      if (finalDestinations.length < 3) {
+        const fallbacks = [
+          { name: "Paris, France", count: 1254, image: "/images/hero_bg_1784370008936.png" },
+          { name: "Tokyo, Japan", count: 982, image: "/images/dest_tokyo_1784370032130.png" },
+          { name: "Santorini, Greece", count: 756, image: "/images/dest_santorini_1784370051980.png" },
+          { name: "Swiss Alps, Switzerland", count: 642, image: "/images/dest_swiss_1784370021031.png" }
+        ];
+        // Merge without duplicates
+        const existingNames = new Set(finalDestinations.map(d => d.name));
+        fallbacks.forEach(f => {
+          if (!existingNames.has(f.name) && finalDestinations.length < 6) {
+            finalDestinations.push(f);
+          }
+        });
+      }
+
+      res.status(200).json({
+        status: "success",
+        data: finalDestinations
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   public async createTrip(req: Request, res: Response, next: NextFunction) {
     try {
       const { title, destination, startDate, endDate, budget, travelers, travelStyle, generatedData } = req.body;
