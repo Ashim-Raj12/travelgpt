@@ -7,27 +7,19 @@ export const destinationSchema = z.object({
 export type DestinationInput = z.infer<typeof destinationSchema>
 
 export const budgetSchema = z.object({
-  budget: z.enum(["Budget", "Moderate", "Luxury"], {
-    required_error: "Please select a budget level.",
-  }),
+  budget: z.enum(["Budget", "Moderate", "Luxury"]),
 })
 export type BudgetInput = z.infer<typeof budgetSchema>
 
 export const travelersSchema = z.object({
   travelersCount: z.string().min(1, "Please specify number of travelers."),
-  travelersType: z.enum(["Solo", "Couple", "Family", "Group"], {
-    required_error: "Please select a traveler type.",
-  }),
+  travelersType: z.enum(["Solo", "Couple", "Family", "Group"]),
 })
 export type TravelersInput = z.infer<typeof travelersSchema>
 
 export const styleSchema = z.object({
-  travelStyle: z.enum(["Tourist Highlights", "Hidden Gems", "Mix of Both"], {
-    required_error: "Please select a travel style.",
-  }),
-  pace: z.enum(["Relaxed", "Moderate", "Fast-Paced"], {
-    required_error: "Please select a pace.",
-  }),
+  travelStyle: z.enum(["Tourist Highlights", "Hidden Gems", "Mix of Both"]),
+  pace: z.enum(["Relaxed", "Moderate", "Fast-Paced"]),
 })
 export type StyleInput = z.infer<typeof styleSchema>
 
@@ -42,9 +34,7 @@ export const foodSchema = z.object({
 export type FoodInput = z.infer<typeof foodSchema>
 
 export const accommodationSchema = z.object({
-  accommodation: z.enum(["Hostel", "Hotel", "Resort", "Airbnb", "Boutique"], {
-    required_error: "Please select an accommodation type.",
-  }),
+  accommodation: z.enum(["Hostel", "Hotel", "Resort", "Airbnb", "Boutique"]),
 })
 export type AccommodationInput = z.infer<typeof accommodationSchema>
 

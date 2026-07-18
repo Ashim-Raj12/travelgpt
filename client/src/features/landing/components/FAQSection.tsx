@@ -45,7 +45,7 @@ export const FAQSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion type={"single" as "single"} collapsible className="w-full space-y-4">
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`} className="bg-card px-6 rounded-xl border border-border/50">
                 <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline py-6">

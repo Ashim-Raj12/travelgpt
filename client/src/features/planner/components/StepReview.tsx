@@ -6,6 +6,8 @@ import { motion } from "framer-motion"
 import { toast } from "sonner"
 import { useState } from "react"
 
+import { useNavigate } from "react-router"
+
 interface Props {
   data: Partial<PlannerData>
   onBack: () => void
@@ -14,6 +16,7 @@ interface Props {
 
 export const StepReview = ({ data, onBack, onSubmit }: Props) => {
   const [isGenerating, setIsGenerating] = useState(false)
+  const navigate = useNavigate()
 
   const handleGenerate = async () => {
     setIsGenerating(true)
@@ -22,10 +25,19 @@ export const StepReview = ({ data, onBack, onSubmit }: Props) => {
       const response = await fetch("/api/ai/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(data),
       })
       const result = await response.json()
-      if (!response.ok) throw new Error(result.message || "Failed to generate itinerary")
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          toast.error("Please sign in to generate your itinerary.")
+          navigate("/login")
+          return
+        }
+        throw new Error(result.message || "Failed to generate itinerary")
+      }
       
       setIsGenerating(false)
       onSubmit(result.data.itinerary)

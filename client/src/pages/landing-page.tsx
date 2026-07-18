@@ -38,10 +38,10 @@ export const LandingPage = () => {
             <nav className="space-y-4">
               <Button variant="ghost" className="w-full text-lg h-12" onClick={() => setMobileMenuOpen(false)}>Features</Button>
               <Button variant="ghost" className="w-full text-lg h-12" onClick={() => setMobileMenuOpen(false)}>Destinations</Button>
-              <Button variant="ghost" className="w-full text-lg h-12" asChild onClick={() => setMobileMenuOpen(false)}>
+              <Button variant="ghost" className="w-full text-lg h-12" onClick={() => setMobileMenuOpen(false)}>
                 <Link to="/login">Log in</Link>
               </Button>
-              <Button className="w-full text-lg h-12 mt-4" asChild onClick={() => setMobileMenuOpen(false)}>
+              <Button className="w-full text-lg h-12 mt-4" onClick={() => setMobileMenuOpen(false)}>
                 <Link to="/signup">Get Started</Link>
               </Button>
             </nav>

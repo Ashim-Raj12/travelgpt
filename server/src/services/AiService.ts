@@ -69,7 +69,8 @@ export class AiService {
       {
         "overview": {
           "title": "String - Catchy title for the trip",
-          "summary": "String - 2-3 sentence overview of the trip"
+          "summary": "String - 2-3 sentence overview of the trip",
+          "coordinates": { "lat": Number, "lng": Number } // Main destination coordinates
         },
         "dailyPlan": [
           {
@@ -81,6 +82,7 @@ export class AiService {
                 "title": "String",
                 "description": "String",
                 "location": "String",
+                "coordinates": { "lat": Number, "lng": Number },
                 "cost": Number (Estimated cost per person in USD)
               }
             ]
@@ -91,7 +93,8 @@ export class AiService {
             "name": "String",
             "description": "String",
             "pricePerNight": Number,
-            "rating": Number (out of 5)
+            "rating": Number (out of 5),
+            "coordinates": { "lat": Number, "lng": Number }
           }
         ],
         "restaurants": [
@@ -99,7 +102,8 @@ export class AiService {
             "name": "String",
             "cuisine": "String",
             "priceRange": "String (e.g., $$, $$$)",
-            "mustTry": "String (Dish recommendation)"
+            "mustTry": "String (Dish recommendation)",
+            "coordinates": { "lat": Number, "lng": Number }
           }
         ],
         "budget": {
@@ -117,7 +121,7 @@ export class AiService {
         ],
         "emergencyContacts": [
           {
-            "name": "String (e.g. Police, Embassy)",
+            "name": "String (e.g. Police, Embassy, Hospital)",
             "number": "String"
           }
         ],
@@ -132,7 +136,7 @@ export class AiService {
           "advice": "String"
         },
         "nearbyAttractions": [
-          "String", "String"
+          { "name": "String", "coordinates": { "lat": Number, "lng": Number } }
         ]
       }
     `;
