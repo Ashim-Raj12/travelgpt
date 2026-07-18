@@ -53,7 +53,7 @@ class TripController {
   public async createTrip(req: Request, res: Response, next: NextFunction) {
     try {
       const { title, destination, startDate, endDate, budget, travelers, travelStyle, generatedData } = req.body;
-      let parsedBudget = "moderate";
+      let parsedBudget: "cheap" | "luxury" | "moderate" = "moderate";
       if (budget) {
         const b = budget.toString().toLowerCase();
         if (b === "budget" || b === "cheap") parsedBudget = "cheap";
