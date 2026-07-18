@@ -11,6 +11,7 @@ import { EmailVerificationPage } from "@/features/auth/pages/EmailVerificationPa
 import { ProfileCompletionPage } from "@/features/auth/pages/ProfileCompletionPage"
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage"
 import { PlannerPage } from "@/features/planner/pages/PlannerPage"
+import { ItineraryPage } from "@/features/itinerary/pages/ItineraryPage"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/plan" element={<PlannerPage />} />
+          <Route path="/itinerary/:id" element={<ItineraryPage />} />
         </Routes>
       </TooltipProvider>
     </ThemeProvider>
