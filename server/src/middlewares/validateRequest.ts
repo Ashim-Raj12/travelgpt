@@ -13,7 +13,8 @@ export const validateRequest = (schema: ZodObject<any>) => {
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        const errorMessages = (error as any).errors.map((issue: any) => ({
+        const issues = error.issues || (error as any).errors || [];
+        const errorMessages = issues.map((issue: any) => ({
           message: `${issue.path.join('.')} is ${issue.message}`,
         }));
         res.status(400).json({ status: "fail", errors: errorMessages });

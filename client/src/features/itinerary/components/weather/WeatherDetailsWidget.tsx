@@ -15,7 +15,7 @@ export const WeatherDetailsWidget = ({ current }: { current: any }) => {
   return (
     <div className="grid grid-cols-2 gap-4">
       {/* Humidity */}
-      <Card className="p-4 flex flex-col justify-between aspect-square">
+      <Card className="p-4 flex flex-col justify-between h-full">
         <div className="flex items-center gap-2 text-muted-foreground mb-2">
           <Droplets className="h-4 w-4" />
           <span className="text-xs font-semibold uppercase tracking-wider">Humidity</span>
@@ -29,7 +29,7 @@ export const WeatherDetailsWidget = ({ current }: { current: any }) => {
       </Card>
 
       {/* Wind */}
-      <Card className="p-4 flex flex-col justify-between aspect-square">
+      <Card className="p-4 flex flex-col justify-between h-full">
         <div className="flex items-center gap-2 text-muted-foreground mb-2">
           <Wind className="h-4 w-4" />
           <span className="text-xs font-semibold uppercase tracking-wider">Wind</span>
@@ -41,7 +41,7 @@ export const WeatherDetailsWidget = ({ current }: { current: any }) => {
       </Card>
 
       {/* UV Index */}
-      <Card className="p-4 flex flex-col justify-between aspect-square">
+      <Card className="p-4 flex flex-col justify-between h-full">
         <div className="flex items-center gap-2 text-muted-foreground mb-2">
           <Sun className="h-4 w-4" />
           <span className="text-xs font-semibold uppercase tracking-wider">UV Index</span>
@@ -55,7 +55,7 @@ export const WeatherDetailsWidget = ({ current }: { current: any }) => {
       </Card>
 
       {/* Air Quality (AQI) */}
-      <Card className="p-4 flex flex-col justify-between aspect-square">
+      <Card className="p-4 flex flex-col justify-between h-full">
         <div className="flex items-center gap-2 text-muted-foreground mb-2">
           <AirIcon className="h-4 w-4" />
           <span className="text-xs font-semibold uppercase tracking-wider">Air Quality</span>

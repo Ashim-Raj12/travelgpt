@@ -53,14 +53,20 @@ class TripController {
   public async createTrip(req: Request, res: Response, next: NextFunction) {
     try {
       const { title, destination, startDate, endDate, budget, travelers, travelStyle, generatedData } = req.body;
-      
+      let parsedBudget = "moderate";
+      if (budget) {
+        const b = budget.toString().toLowerCase();
+        if (b === "budget" || b === "cheap") parsedBudget = "cheap";
+        else if (b === "luxury") parsedBudget = "luxury";
+      }
+
       const trip = await Trip.create({
         user: req.user?.id,
         title,
         destination,
         startDate: new Date(startDate),
         endDate: new Date(endDate),
-        budget: budget || "moderate",
+        budget: parsedBudget,
         travelers: Number(travelers) || 1,
         travelStyle,
         status: "upcoming",

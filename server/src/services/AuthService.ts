@@ -80,7 +80,7 @@ export class AuthService {
 
   async verifyEmail(token: string, res: Response) {
     const user = await userRepository.findByVerificationToken(token);
-    
+
     if (!user) {
       throw new AppError("Invalid or expired verification token.", 400);
     }
@@ -108,9 +108,9 @@ export class AuthService {
       throw new AppError("Incorrect email or password", 401);
     }
 
-    if (!user.isVerified) {
-      throw new AppError("Please verify your email address before logging in.", 401);
-    }
+    // if (!user.isVerified) {
+    //   throw new AppError("Please verify your email address before logging in.", 401);
+    // }
 
     createSendToken(user, 200, res);
   }

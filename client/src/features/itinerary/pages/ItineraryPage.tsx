@@ -48,10 +48,14 @@ export const ItineraryPage = () => {
         })
       });
       
-      if (!response.ok) throw new Error("Failed to save");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to save trip on the server");
+      }
       toast.success("Trip saved successfully to Dashboard!");
-    } catch (error) {
-      toast.error("Could not save trip. Make sure you are logged in.");
+    } catch (error: any) {
+      toast.error(error.message || "Could not save trip.");
+      console.error(error);
       throw error;
     }
   }
@@ -135,11 +139,11 @@ export const ItineraryPage = () => {
             <div className="lg:col-span-2 space-y-12">
               
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="w-full grid grid-cols-4 mb-8 h-12 print:hidden">
-                  <TabsTrigger value="timeline" className="text-base h-10">Daily Timeline</TabsTrigger>
-                  <TabsTrigger value="places" className="text-base h-10">Hotels & Dining</TabsTrigger>
-                  <TabsTrigger value="map" className="text-base h-10">Map View</TabsTrigger>
-                  <TabsTrigger value="weather" className="text-base h-10">Weather</TabsTrigger>
+                <TabsList className="w-full flex mb-8 h-12 print:hidden">
+                  <TabsTrigger value="timeline" className="text-base h-10 flex-1">Daily Timeline</TabsTrigger>
+                  <TabsTrigger value="places" className="text-base h-10 flex-1">Hotels & Dining</TabsTrigger>
+                  <TabsTrigger value="map" className="text-base h-10 flex-1">Map View</TabsTrigger>
+                  <TabsTrigger value="weather" className="text-base h-10 flex-1">Weather</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="timeline" className="mt-0 print:block">

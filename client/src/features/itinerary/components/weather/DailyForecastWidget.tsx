@@ -35,7 +35,7 @@ export const DailyForecastWidget = ({ daily }: { daily: any[] }) => {
               
               <div className="flex items-center justify-center w-12 shrink-0 relative">
                 <img 
-                  src={`https://openweathermap.org/img/wn/${day.weather.icon}.png`} 
+                  src={`https://openweathermap.org/img/wn/${day.weather.icon}@2x.png`} 
                   alt={day.weather.description} 
                   className="w-8 h-8"
                 />

@@ -22,27 +22,6 @@ export const ItinerarySidebar = ({ data, markers }: { data: any, markers?: any[]
         </div>
       </Card>
 
-      {/* Weather Forecast */}
-      <Card className="border-border/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base flex items-center gap-2">
-            <CloudSun className="h-4 w-4 text-primary" />
-            Weather Forecast
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex justify-between items-center bg-muted/50 p-3 rounded-lg">
-            <div>
-              <p className="text-2xl font-bold">-2°C</p>
-              <p className="text-xs text-muted-foreground">Snow Showers</p>
-            </div>
-            <CloudSun className="h-8 w-8 text-blue-400" />
-          </div>
-          <p className="text-xs text-muted-foreground mt-3 text-center">
-            Expect heavy snowfall during your trip. Dress warmly!
-          </p>
-        </CardContent>
-      </Card>
 
       {/* Budget Summary */}
       <Card className="border-border/50">

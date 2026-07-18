@@ -25,7 +25,7 @@ export const HourlyForecastWidget = ({ hourly }: { hourly: any[] }) => {
                 {isNow ? 'Now' : date.toLocaleTimeString([], { hour: 'numeric' })}
               </span>
               <img 
-                src={`https://openweathermap.org/img/wn/${hour.weather.icon}.png`} 
+                src={`https://openweathermap.org/img/wn/${hour.weather.icon}@2x.png`} 
                 alt={hour.weather.description} 
                 className="w-10 h-10 my-1"
               />
