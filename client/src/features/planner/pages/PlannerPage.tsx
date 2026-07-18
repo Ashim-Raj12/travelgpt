@@ -35,7 +35,7 @@ export const PlannerPage = () => {
 
   const handleFinish = () => {
     toast.success("Itinerary generated successfully!")
-    navigate("/dashboard") // Will navigate to the specific itinerary page later
+    navigate("/itinerary/new", { state: formData })
   }
 
   const handleClose = () => {

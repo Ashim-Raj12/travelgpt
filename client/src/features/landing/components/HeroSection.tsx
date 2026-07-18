@@ -2,8 +2,11 @@ import { motion } from "framer-motion"
 import { Sparkles, MapPin, Calendar, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useNavigate } from "react-router"
 
 export const HeroSection = () => {
+  const navigate = useNavigate()
+
   return (
     <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -47,7 +50,11 @@ export const HeroSection = () => {
                 className="border-0 bg-transparent text-white placeholder:text-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0 p-0 text-base shadow-none w-full"
               />
             </div>
-            <Button size="lg" className="w-full sm:w-auto h-12 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-base px-8 shrink-0">
+            <Button 
+              size="lg" 
+              onClick={() => navigate("/plan")}
+              className="w-full sm:w-auto h-12 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-base px-8 shrink-0"
+            >
               Generate Itinerary
             </Button>
           </div>

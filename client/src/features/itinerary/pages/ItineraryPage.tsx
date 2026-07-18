@@ -1,5 +1,6 @@
 import { DashboardLayout } from "@/components/layout/dashboard-layout"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useLocation } from "react-router"
 import { ItineraryHero } from "../components/ItineraryHero"
 import { ItineraryActions } from "../components/ItineraryActions"
 import { DailyTimeline } from "../components/DailyTimeline"
@@ -8,8 +9,20 @@ import { ItineraryPlaces } from "../components/ItineraryPlaces"
 import { mockItineraryData } from "../data/mockItineraryData"
 
 export const ItineraryPage = () => {
-  // In a real app, we would fetch the itinerary by ID from URL params.
-  const data = mockItineraryData
+  const location = useLocation()
+  const formData = location.state
+
+  // Merge form data with mock data to create a dynamic display
+  const data = formData ? {
+    ...mockItineraryData,
+    title: formData.destination ? `${formData.destination} Trip` : mockItineraryData.title,
+    destination: formData.destination || mockItineraryData.destination,
+    duration: formData.durationDays ? `${formData.durationDays} Days` : mockItineraryData.duration,
+    travelers: formData.travelersCount && formData.travelersType 
+      ? `${formData.travelersCount} Person(s) (${formData.travelersType})` 
+      : mockItineraryData.travelers,
+    budgetLevel: formData.budget || mockItineraryData.budgetLevel,
+  } : mockItineraryData
 
   return (
     <DashboardLayout>
