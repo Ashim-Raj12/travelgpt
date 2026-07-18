@@ -1,5 +1,7 @@
 # TravelGPT ✈️🌍
 
+**Live Demo**: [https://travelgpt-frontend.onrender.com](https://travelgpt-frontend.onrender.com)
+
 TravelGPT is an AI-powered travel planner that helps you generate personalized itineraries, search for hotels and flights, check real-time weather, and manage your travel budget—all in one place.
 
 ## Features
@@ -11,6 +13,14 @@ TravelGPT is an AI-powered travel planner that helps you generate personalized i
 - **Travel Dashboard & Profile**: Save trips, track your budget, and manage your user profile with a clean, responsive UI.
 - **Authentication**: Secure email/password login, JWT-based sessions, and OTP email verification.
 - **Optimized Frontend**: Lazy loading, route-based code splitting, global caching via React Query, and PWA support.
+
+### Recent Updates & Enhancements
+- **Refined Search Experience**: Upgraded the `/search` page layout to use `DashboardLayout`, matching the app theme, and added smooth `framer-motion` animations.
+- **Advanced Flight Search**: Flight search now supports specific "Where from?" (origin) and "Where to?" (destination) inputs.
+- **Direct Booking Links**: Clicking "Book Ticket" on any flight result directly opens Google Flights pre-filled with your origin, destination, and airline.
+- **Integrated Maps**: Hotel search results and Saved Trip (Itinerary) places now link directly to Google Maps, allowing you to instantly view the location of any recommended hotel or restaurant.
+- **Robust Saved Trips**: Fixed a bug where missing traveler data caused saved trips to fall back to demo data. They now display accurately every time.
+- **UI Polish**: Fixed overlapping CSS issues on the Daily Timeline where icons overlapped with the time indicator text.
 
 ---
 
