@@ -1,33 +1,33 @@
 import { useTheme } from "@/components/theme-provider"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun, Menu } from "lucide-react"
+import { Moon, Sun, Menu, Sparkles } from "lucide-react"
+import { Link } from "react-router"
 
-interface NavbarProps {
-  onMenuClick?: () => void
-}
-
-export const Navbar = ({ onMenuClick }: NavbarProps) => {
+export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const { theme, setTheme } = useTheme()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={onMenuClick}
-          >
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle Menu</span>
-          </Button>
-          <div className="flex items-center gap-2 font-bold text-lg">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
+        <div className="flex items-center gap-2">
+          {onMenuClick && (
+            <Button variant="ghost" size="icon" className="md:hidden mr-2" onClick={onMenuClick}>
+              <Menu className="h-5 w-5" />
+            </Button>
+          )}
+          <Link to="/" className="flex items-center gap-2 font-serif text-2xl font-bold tracking-tight">
+            <Sparkles className="h-6 w-6 text-primary" />
             TravelGPT
-          </div>
+          </Link>
         </div>
 
-        <div className="flex items-center gap-2">
+        <nav className="hidden md:flex items-center gap-6">
+          <Link to="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Features</Link>
+          <Link to="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Destinations</Link>
+          <Link to="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
+        </nav>
+
+        <div className="flex items-center gap-4">
           <Button
             variant="ghost"
             size="icon"
@@ -37,6 +37,14 @@ export const Navbar = ({ onMenuClick }: NavbarProps) => {
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>
           </Button>
+          <div className="hidden sm:flex items-center gap-2">
+            <Button variant="ghost" asChild>
+              <Link to="/login">Log in</Link>
+            </Button>
+            <Button asChild>
+              <Link to="/signup">Sign up</Link>
+            </Button>
+          </div>
         </div>
       </div>
     </header>
