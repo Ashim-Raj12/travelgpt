@@ -43,9 +43,7 @@ export const DailyTimeline = ({ timeline }: Props) => {
           </div>
 
           {/* Timeline */}
-          <div className="relative mt-8 space-y-8">
-            {/* Vertical Line */}
-            <div className="absolute left-[88px] md:left-[104px] top-4 bottom-0 w-px bg-border" />
+          <div className="relative mt-8 space-y-4 md:space-y-6">
 
             {day.activities.map((activity: any, actIdx: number) => (
               <motion.div 
@@ -54,16 +52,21 @@ export const DailyTimeline = ({ timeline }: Props) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: actIdx * 0.1 }}
-                className="relative flex items-start gap-4 md:gap-6"
+                className="relative flex items-start gap-3 md:gap-6"
               >
                 {/* Time Indicator */}
-                <div className="w-16 md:w-20 pt-1.5 text-right shrink-0">
-                  <span className="text-sm font-bold text-muted-foreground">{activity.time}</span>
+                <div className="w-14 md:w-20 pt-1.5 text-right shrink-0">
+                  <span className="text-xs md:text-sm font-bold text-muted-foreground">{activity.time}</span>
                 </div>
 
-                {/* Icon Node */}
-                <div className="relative z-10 flex flex-col items-center shrink-0">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-sm ${getColorForType(activity.type)}`}>
+                {/* Icon Node & Vertical Line */}
+                <div className="relative flex flex-col items-center shrink-0">
+                  {/* The vertical line connecting to the next item */}
+                  {actIdx !== day.activities.length - 1 && (
+                    <div className="absolute top-8 bottom-[-2rem] w-px bg-border" />
+                  )}
+                  
+                  <div className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center shadow-sm ${getColorForType(activity.type)}`}>
                     {getIconForType(activity.type)}
                   </div>
                 </div>

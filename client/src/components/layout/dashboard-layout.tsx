@@ -29,6 +29,7 @@ const navItems = [
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
 
   return (
@@ -121,7 +122,10 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   key={item.label}
                   variant="ghost"
                   className="w-full justify-start text-base h-12 rounded-xl"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    navigate(item.href)
+                  }}
                 >
                   <item.icon className="mr-4 h-5 w-5 text-muted-foreground" />
                   {item.label}

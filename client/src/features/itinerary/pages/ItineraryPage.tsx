@@ -139,11 +139,11 @@ export const ItineraryPage = () => {
             <div className="lg:col-span-2 space-y-12">
               
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="w-full flex mb-8 h-12 print:hidden">
-                  <TabsTrigger value="timeline" className="text-base h-10 flex-1">Daily Timeline</TabsTrigger>
-                  <TabsTrigger value="places" className="text-base h-10 flex-1">Hotels & Dining</TabsTrigger>
-                  <TabsTrigger value="map" className="text-base h-10 flex-1">Map View</TabsTrigger>
-                  <TabsTrigger value="weather" className="text-base h-10 flex-1">Weather</TabsTrigger>
+                <TabsList className="w-full flex flex-wrap sm:flex-nowrap mb-8 h-auto sm:h-12 print:hidden bg-muted/50 p-1 rounded-xl">
+                  <TabsTrigger value="timeline" className="text-sm sm:text-base h-10 flex-1 whitespace-nowrap">Daily Plan</TabsTrigger>
+                  <TabsTrigger value="places" className="text-sm sm:text-base h-10 flex-1 whitespace-nowrap">Hotels & Food</TabsTrigger>
+                  <TabsTrigger value="map" className="text-sm sm:text-base h-10 flex-1 whitespace-nowrap">Map View</TabsTrigger>
+                  <TabsTrigger value="weather" className="text-sm sm:text-base h-10 flex-1 whitespace-nowrap">Weather</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="timeline" className="mt-0 print:block">
