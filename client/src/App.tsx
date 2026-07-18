@@ -13,6 +13,7 @@ import { DashboardPage } from "@/features/dashboard/pages/DashboardPage"
 import { PlannerPage } from "@/features/planner/pages/PlannerPage"
 import { ItineraryPage } from "@/features/itinerary/pages/ItineraryPage"
 import { SearchPage } from "@/features/search/pages/SearchPage"
+import { ProfilePage } from "@/features/profile/pages/ProfilePage"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/planner" element={<PlannerPage />} />
           <Route path="/itinerary/:id" element={<ItineraryPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </TooltipProvider>
     </ThemeProvider>

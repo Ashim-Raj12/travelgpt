@@ -32,7 +32,7 @@ export const SearchPage = () => {
 
     try {
       const endpoint = activeTab === "flights" ? "/api/search/flights" : "/api/search/hotels"
-      const res = await fetch(`http://localhost:3000${endpoint}`, {
+      const res = await fetch(endpoint, {
         method: "POST",
         credentials: "include",
         headers: {

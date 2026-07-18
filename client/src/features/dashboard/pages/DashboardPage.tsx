@@ -71,9 +71,9 @@ export const DashboardPage = () => {
             <SavedTripsWidget trips={trips} />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <TravelBudgetWidget />
+              <TravelBudgetWidget trip={trips[0]} />
               <div className="space-y-6">
-                <WeatherWidget />
+                <WeatherWidget trip={trips[0]} />
                 <RecentActivityWidget trips={trips} />
               </div>
             </div>
