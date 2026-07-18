@@ -4,6 +4,7 @@ import { Moon, Sun, Menu, Sparkles, LayoutDashboard, LogOut } from "lucide-react
 import { Link, useNavigate } from "react-router"
 import { useState, useEffect } from "react"
 import { toast } from "sonner"
+import { InstallPWA } from "@/components/InstallPWA"
 
 export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const { theme, setTheme } = useTheme()
@@ -53,6 +54,7 @@ export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
         </nav>
 
         <div className="flex items-center gap-4">
+          <InstallPWA />
           <Button
             variant="ghost"
             size="icon"
