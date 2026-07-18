@@ -81,7 +81,7 @@ export const SearchFilters = ({
             </div>
             <Slider 
               value={budget} 
-              onValueChange={setBudget} 
+              onValueChange={(val: any) => setBudget(val)} 
               max={2000} 
               step={50} 
               className="py-4"
@@ -119,7 +119,7 @@ export const SearchFilters = ({
                 </div>
                 <Slider 
                   value={maxDistance} 
-                  onValueChange={setMaxDistance} 
+                  onValueChange={(val: any) => setMaxDistance(val)} 
                   max={50} 
                   step={1} 
                   className="py-4"

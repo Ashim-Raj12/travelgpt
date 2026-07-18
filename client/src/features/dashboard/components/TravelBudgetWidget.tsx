@@ -1,7 +1,8 @@
 import { DollarSign, TrendingUp, AlertCircle, Plus } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { Link } from "react-router"
 
 export const TravelBudgetWidget = ({ trip }: { trip?: any }) => {
@@ -11,11 +12,9 @@ export const TravelBudgetWidget = ({ trip }: { trip?: any }) => {
         <DollarSign className="h-12 w-12 text-muted-foreground mb-4 opacity-20" />
         <h3 className="font-semibold text-lg mb-2">No active budgets</h3>
         <p className="text-sm text-muted-foreground mb-4">Plan a trip to see your budget tracking here.</p>
-        <Button variant="outline" asChild>
-          <Link to="/plan" className="flex items-center">
-            <Plus className="mr-2 h-4 w-4" /> Start Planning
-          </Link>
-        </Button>
+        <Link to="/plan" className={cn(buttonVariants({ variant: "outline" }), "flex items-center")}>
+          <Plus className="mr-2 h-4 w-4" /> Start Planning
+        </Link>
       </Card>
     )
   }

@@ -9,6 +9,9 @@ class UserRepository {
     async findById(id) {
         return await UserModel_1.User.findById(id);
     }
+    async findByVerificationToken(token) {
+        return await UserModel_1.User.findOne({ verificationToken: token });
+    }
     async findByEmail(email, selectPassword = false) {
         const query = UserModel_1.User.findOne({ email });
         if (selectPassword) {

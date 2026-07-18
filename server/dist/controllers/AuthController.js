@@ -11,6 +11,14 @@ class AuthController {
             next(error);
         }
     }
+    async verifyEmail(req, res, next) {
+        try {
+            await AuthService_1.authService.verifyEmail(req.params.token, res);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
     async login(req, res, next) {
         try {
             await AuthService_1.authService.login(req.body, res);

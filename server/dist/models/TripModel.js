@@ -54,8 +54,7 @@ const tripSchema = new mongoose_1.Schema({
         required: [true, "Trip must belong to a user"],
     },
     destination: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Destination",
+        type: String,
         required: [true, "Trip must have a destination"],
     },
     title: {
@@ -88,6 +87,7 @@ const tripSchema = new mongoose_1.Schema({
         default: "planning",
     },
     itinerary: [daySchema],
+    generatedData: { type: mongoose_1.Schema.Types.Mixed },
 }, { timestamps: true });
 // Custom validation for dates
 tripSchema.pre("validate", function (next) {

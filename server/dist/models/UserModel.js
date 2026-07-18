@@ -67,13 +67,19 @@ const userSchema = new mongoose_1.Schema({
         currency: { type: String, default: "USD" },
         language: { type: String, default: "en" },
     },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
+    verificationToken: {
+        type: String,
+    },
 }, { timestamps: true });
 // Hash password before saving
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
     if (!this.isModified("password") || !this.password)
-        return next();
+        return;
     this.password = await bcryptjs_1.default.hash(this.password, 12);
-    next();
 });
 // Compare password method
 userSchema.methods.comparePassword = async function (candidatePassword) {

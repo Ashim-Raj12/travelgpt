@@ -38,14 +38,40 @@ const createSendToken = (user, statusCode, res) => {
         },
     });
 };
+const crypto_1 = __importDefault(require("crypto"));
+const email_1 = require("../utils/email");
 class AuthService {
     async register(userData, res) {
         const existingUser = await UserRepository_1.userRepository.findByEmail(userData.email);
         if (existingUser) {
             throw new AppError_1.AppError("Email already in use", 400);
         }
-        const newUser = await UserRepository_1.userRepository.create(userData);
-        createSendToken(newUser, 201, res);
+        // Create a random token
+        const verificationToken = crypto_1.default.randomBytes(32).toString("hex");
+        const newUser = await UserRepository_1.userRepository.create({
+            ...userData,
+            verificationToken,
+            isVerified: false,
+        });
+        // Send verification email
+        await (0, email_1.sendVerificationEmail)(newUser.email, verificationToken);
+        res.status(201).json({
+            status: "success",
+            message: "Registration successful. Please check your email to verify your account.",
+        });
+    }
+    async verifyEmail(token, res) {
+        const user = await UserRepository_1.userRepository.findByVerificationToken(token);
+        if (!user) {
+            throw new AppError_1.AppError("Invalid or expired verification token.", 400);
+        }
+        user.isVerified = true;
+        user.verificationToken = undefined;
+        await user.save();
+        res.status(200).json({
+            status: "success",
+            message: "Email successfully verified. You can now log in.",
+        });
     }
     async login(userData, res) {
         const { email, password } = userData;
@@ -55,6 +81,9 @@ class AuthService {
         const user = await UserRepository_1.userRepository.findByEmail(email, true);
         if (!user || !(await user.comparePassword(password))) {
             throw new AppError_1.AppError("Incorrect email or password", 401);
+        }
+        if (!user.isVerified) {
+            throw new AppError_1.AppError("Please verify your email address before logging in.", 401);
         }
         createSendToken(user, 200, res);
     }

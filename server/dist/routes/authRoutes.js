@@ -20,6 +20,7 @@ const loginSchema = zod_1.z.object({
     }),
 });
 router.post("/register", (0, validateRequest_1.validateRequest)(registerSchema), AuthController_1.authController.register);
+router.get("/verify/:token", AuthController_1.authController.verifyEmail);
 router.post("/login", (0, validateRequest_1.validateRequest)(loginSchema), AuthController_1.authController.login);
 router.post("/logout", AuthController_1.authController.logout);
 exports.default = router;

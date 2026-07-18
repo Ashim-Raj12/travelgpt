@@ -1,7 +1,8 @@
 import { MoreHorizontal, ExternalLink, CalendarDays } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,10 +70,8 @@ export const SavedTripsWidget = ({ trips }: SavedTripsWidgetProps) => {
                       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
                       <div className="absolute top-2 right-2" onClick={(e) => e.stopPropagation()}>
                         <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 bg-background/50 backdrop-blur hover:bg-background/80 text-foreground rounded-full">
+                          <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8 bg-background/50 backdrop-blur hover:bg-background/80 text-foreground rounded-full")}>
                               <MoreHorizontal className="h-4 w-4" />
-                            </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem>Edit Itinerary</DropdownMenuItem>

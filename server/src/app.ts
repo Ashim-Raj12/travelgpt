@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import compression from "compression";
 import rateLimit from "express-rate-limit";
 import { globalErrorHandler } from "./middlewares/errorMiddleware";
 import { AppError } from "./utils/AppError";
@@ -11,6 +12,7 @@ const app: Express = express();
 
 // Security Middlewares
 app.use(helmet());
+app.use(compression());
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",

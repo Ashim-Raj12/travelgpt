@@ -36,10 +36,16 @@ if (process.env.NODE_ENV === "development") {
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const aiRoutes_1 = __importDefault(require("./routes/aiRoutes"));
+const weatherRoutes_1 = __importDefault(require("./routes/weatherRoutes"));
+const tripRoutes_1 = __importDefault(require("./routes/tripRoutes"));
+const searchRoutes_1 = __importDefault(require("./routes/searchRoutes"));
 // Routes
 app.use("/api/auth", authRoutes_1.default);
 app.use("/api/users", userRoutes_1.default);
 app.use("/api/ai", aiRoutes_1.default);
+app.use("/api/weather", weatherRoutes_1.default);
+app.use("/api/trips", tripRoutes_1.default);
+app.use("/api/search", searchRoutes_1.default);
 app.get("/api/health", (req, res) => {
     res.status(200).json({ status: "success", message: "Server is healthy" });
 });

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { Map, Plane, Compass, Heart, Settings, Home, Search, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Link, useLocation } from "react-router"
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,8 +20,9 @@ const navItems = [
 export const Sidebar = ({ className, collapsed = false, ...props }: SidebarProps) => {
   const location = useLocation()
 
+  const MotionAside = motion.aside as any;
   return (
-    <motion.aside
+    <MotionAside
       initial={false}
       animate={{ width: collapsed ? 80 : 250 }}
       className={cn(
@@ -35,20 +36,18 @@ export const Sidebar = ({ className, collapsed = false, ...props }: SidebarProps
           {navItems.map((item) => {
             const isActive = location.pathname === item.href
             return (
-              <Button
+              <Link
                 key={item.label}
-                variant={isActive ? "secondary" : "ghost"}
+                to={item.href}
                 className={cn(
+                  buttonVariants({ variant: isActive ? "secondary" : "ghost" }),
                   "w-full justify-start",
                   collapsed ? "px-2 justify-center" : "px-4"
                 )}
-                asChild
               >
-                <Link to={item.href} className="flex items-center">
-                  <item.icon className={cn("h-5 w-5", collapsed ? "mr-0" : "mr-2")} />
-                  {!collapsed && <span>{item.label}</span>}
-                </Link>
-              </Button>
+                <item.icon className={cn("h-5 w-5", collapsed ? "mr-0" : "mr-2")} />
+                {!collapsed && <span>{item.label}</span>}
+              </Link>
             )
           })}
         </nav>
@@ -65,6 +64,6 @@ export const Sidebar = ({ className, collapsed = false, ...props }: SidebarProps
           {!collapsed && <span>Settings</span>}
         </Button>
       </div>
-    </motion.aside>
+    </MotionAside>
   )
 }

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 import { motion } from "framer-motion"
 
 export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,8 +17,9 @@ export const EmptyState = ({
   className,
   ...props
 }: EmptyStateProps) => {
-  return (
-    <motion.div
+    const MotionDiv = motion.div as any;
+    return (
+    <MotionDiv
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
@@ -39,6 +40,6 @@ export const EmptyState = ({
         </p>
       )}
       {action && <div className="mt-4">{action}</div>}
-    </motion.div>
+    </MotionDiv>
   )
 }

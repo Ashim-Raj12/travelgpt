@@ -5,13 +5,19 @@ const AiService_1 = require("../services/AiService");
 const zod_1 = require("zod");
 // Validation schema for incoming AI generation request
 exports.generateItinerarySchema = zod_1.z.object({
-    destination: zod_1.z.string().min(1, "Destination is required"),
-    budget: zod_1.z.string().min(1, "Budget is required"),
-    travelers: zod_1.z.string().min(1, "Travelers is required"),
-    days: zod_1.z.number().min(1, "At least 1 day is required").max(30, "Maximum 30 days allowed"),
-    travelStyle: zod_1.z.string().min(1, "Travel style is required"),
-    interests: zod_1.z.array(zod_1.z.string()).default([]),
-    food: zod_1.z.array(zod_1.z.string()).default([]),
+    body: zod_1.z.object({
+        destination: zod_1.z.string().min(1, "Destination is required"),
+        durationDays: zod_1.z.string().min(1, "Duration is required"),
+        budget: zod_1.z.string().min(1, "Budget is required"),
+        travelersCount: zod_1.z.string().min(1, "Travelers count is required"),
+        travelersType: zod_1.z.string().min(1, "Travelers type is required"),
+        travelStyle: zod_1.z.string().min(1, "Travel style is required"),
+        pace: zod_1.z.string().min(1, "Pace is required"),
+        interests: zod_1.z.array(zod_1.z.string()).default([]),
+        foodPreferences: zod_1.z.array(zod_1.z.string()).default([]),
+        accommodation: zod_1.z.string().min(1, "Accommodation is required"),
+        transportation: zod_1.z.array(zod_1.z.string()).default([]),
+    })
 });
 class AiController {
     async generateItinerary(req, res, next) {
