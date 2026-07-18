@@ -47,7 +47,7 @@ export const ProfileCompletionPage = () => {
     setIsLoading(false)
     
     toast.success("Profile completed successfully!")
-    navigate("/")
+    navigate("/dashboard")
   }
 
   return (

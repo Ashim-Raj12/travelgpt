@@ -39,7 +39,7 @@ export const OTPVerificationPage = () => {
     
     if (data.pin === "123456") {
       toast.success("Verification successful!")
-      navigate("/")
+      navigate("/dashboard")
     } else {
       toast.error("Invalid OTP code. Try 123456.")
     }

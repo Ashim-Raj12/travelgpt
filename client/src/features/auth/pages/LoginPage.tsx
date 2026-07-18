@@ -42,7 +42,7 @@ export const LoginPage = () => {
       toast.error("Invalid credentials. Please try again.")
     } else {
       toast.success("Successfully logged in!")
-      navigate("/")
+      navigate("/dashboard")
     }
   }
 

@@ -9,6 +9,7 @@ import { ResetPasswordPage } from "@/features/auth/pages/ResetPasswordPage"
 import { OTPVerificationPage } from "@/features/auth/pages/OTPVerificationPage"
 import { EmailVerificationPage } from "@/features/auth/pages/EmailVerificationPage"
 import { ProfileCompletionPage } from "@/features/auth/pages/ProfileCompletionPage"
+import { DashboardPage } from "@/features/dashboard/pages/DashboardPage"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route path="/verify-otp" element={<OTPVerificationPage />} />
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </TooltipProvider>
     </ThemeProvider>
