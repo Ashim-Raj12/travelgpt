@@ -48,7 +48,7 @@ export const HeroSection = () => {
     const dest = query.trim() || "Paris" // Fallback if empty
     setIsCheckingAuth(true)
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/me`, {
         headers: { "Content-Type": "application/json" },
         credentials: "include"
       })

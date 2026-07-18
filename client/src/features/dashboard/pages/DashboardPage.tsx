@@ -19,8 +19,8 @@ export const DashboardPage = () => {
     const fetchDashboardData = async () => {
       try {
         const [statsRes, tripsRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips/stats', { credentials: 'include' }),
-          fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips', { credentials: 'include' })
+          fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips/stats`, { credentials: 'include' }),
+          fetch(`${import.meta.env.VITE_API_URL || ""}/api/trips`, { credentials: 'include' })
         ])
 
         if (!statsRes.ok || !tripsRes.ok) throw new Error("Failed to fetch dashboard data")

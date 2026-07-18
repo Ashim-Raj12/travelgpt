@@ -11,7 +11,7 @@ export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/me", { 
+    fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/me`, { 
       headers: { "Content-Type": "application/json" },
       credentials: "include"
     })
@@ -21,7 +21,7 @@ export const Navbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/logout", { method: "POST", credentials: "include" })
+      await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/logout`, { method: "POST", credentials: "include" })
       setIsLoggedIn(false)
       toast.success("Logged out successfully")
       navigate("/")
